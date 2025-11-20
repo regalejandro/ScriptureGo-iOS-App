@@ -1,6 +1,6 @@
 {
   "translations": {
-    "douay_rheims": {
+    "douay-rheims": {
       "books": [
         { "id": 1, "name": "Genesis", "chapters": 50, "groups": ["Torah"], "section": "OT" },
         { "id": 2, "name": "Exodus", "chapters": 40, "groups": ["Torah"], "section": "OT" },

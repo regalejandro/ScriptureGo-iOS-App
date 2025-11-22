@@ -9,8 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        TranslationPickerView()
+            
+        TabView {
 
+            SelectorView()
+                .tabItem {
+                    Label("Select", systemImage: "rays")
+                }
+
+            TranslationPickerView()
+                .tabItem {
+                    Label("Picker", systemImage: "gearshape")
+                }
+            
+            
+        }
     }
 }
 

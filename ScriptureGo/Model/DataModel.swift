@@ -22,3 +22,9 @@ struct Book: Codable, Identifiable {
     let groups: [String]
     let section: String
 }
+
+struct ChapterPointer {
+    let bookID: Int
+    let bookName: String
+    let chapter: Int
+}

@@ -33,5 +33,31 @@ class BibleManager: ObservableObject {
     func books(for translation: String) -> [Book] {
         data?.translations[translation]?.books ?? []
     }
+    
+    func randomChapter(for translation: String) -> ChapterPointer? {
+        guard let books = data?.translations[translation]?.books else { return nil }
+        
+        // Total chapters across all books
+        let totalChapters = books.reduce(0) { $0 + $1.chapters }
+        guard totalChapters > 0 else { return nil }
+
+        // Choose a chapter index across the entire canon
+        let randomIndex = Int.random(in: 1...totalChapters)
+
+        // Find which book that chapter index belongs to
+        var runningTotal = 0
+
+        for book in books {
+            let nextTotal = runningTotal + book.chapters
+            if randomIndex <= nextTotal {
+                let chapterNumber = randomIndex - runningTotal
+                return ChapterPointer(bookID: book.id, bookName: book.name, chapter: chapterNumber)
+            }
+            runningTotal = nextTotal
+        }
+
+        return nil
+    }
+
 }
 

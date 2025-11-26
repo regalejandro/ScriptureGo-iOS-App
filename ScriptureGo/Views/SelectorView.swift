@@ -13,18 +13,48 @@ struct SelectorView: View {
     @StateObject var bible = BibleManager()
     
     @State private var showSettings = false
-    @State var lastSelected: ChapterPointer = .init(bookID: 0, bookName: "None Selected", chapter: 0)
+    @State var lastSelected: ChapterPointer = .init(bookID: 0, bookName: "None Chosen", chapter: 0)
     
     
     var body: some View {
         NavigationView {
             VStack {
+                
+                VStack {
+                    VStack(alignment: .leading) {
+                        Text("Last Selected")
+                            .font(.body)
+                            .foregroundColor(.accentColor)
+                            .padding()
 
-                if lastSelected.bookID != 0 {
-                    Text("\(lastSelected.bookName) \(lastSelected.chapter)")
+                        Divider()
+                            .padding(.horizontal)
+                    }
+                    
+                    Text(
+                        lastSelected.bookID != 0
+                        ? "\(lastSelected.bookName) \(lastSelected.chapter)"
+                        : "\(lastSelected.bookName)"
+                    )
                         .font(.largeTitle)
-                        .padding()
+                        .padding(.top, 24)
+                        .padding(.horizontal)
+
+                    Spacer()
                 }
+                .frame(maxWidth: .infinity)
+                .frame(height: 180)
+                .background(
+                    RoundedRectangle(cornerRadius: 18)
+                        .fill(Color.blue.opacity(0.15))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18)
+                        .stroke(Color.blue.opacity(0.3), lineWidth: 1)
+                )
+                .padding()
+                
+
                 
                 HStack(spacing: 12) {
                     // Main Button
@@ -58,14 +88,9 @@ struct SelectorView: View {
                     }
                 }
                 .padding(.horizontal)
-
-
-
-
                 
-                
-                
-                
+                Spacer()
+ 
             }
             .navigationTitle("ScriptureGo")
             .toolbar {
@@ -85,6 +110,7 @@ struct SelectorView: View {
             .sheet(isPresented: $showSettings) {
                 SettingsView()
             }
+            .padding(.top, 50)
         }
         
     }
@@ -93,3 +119,4 @@ struct SelectorView: View {
 #Preview {
     SelectorView()
 }
+

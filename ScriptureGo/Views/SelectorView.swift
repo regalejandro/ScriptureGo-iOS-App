@@ -66,26 +66,23 @@ struct SelectorView: View {
                         Label("Choose Chapter", systemImage: "book")
                             .font(.title2.bold())
                             .frame(maxWidth: .infinity)
-                            .frame(height: 60)
-                            .background(.blue.opacity(0.9))
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
+                            .frame(height: 50)
+
                     }
+                    .buttonStyle(.glassProminent)
 
                     // Customization Button
                     Button {
 
                     } label: {
-                        ZStack {
-                            Circle()
-                                .fill(.ultraThinMaterial)
-                                .frame(width: 60, height: 60)
 
                             Image(systemName: "filemenu.and.selection")
                                 .font(.title.bold())
                                 .foregroundColor(.blue)
-                        }
+                                .frame(width: 62, height: 62)
                     }
+                    .glassEffect(in: Circle())
+
                 }
                 .padding(.horizontal)
                 

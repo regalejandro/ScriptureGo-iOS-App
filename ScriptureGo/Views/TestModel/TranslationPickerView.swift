@@ -8,18 +8,20 @@
 import SwiftUI
 
 struct TranslationPickerView: View {
+    @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
     @StateObject var bible = BibleManager()
-    @State private var selectedTranslation = "douay-rheims"
+    
 
     var body: some View {
         NavigationStack {
             VStack {
+                /*
                 Picker("Translation", selection: $selectedTranslation) {
-                    Text("Douay-Rheims").tag("douay-rheims")
-                    Text("NABRE").tag("nabre")
+                    Text("Douay-Rheims").tag("Douay-Rheims")
+                    Text("NABRE").tag("NABRE")
                 }
                 .pickerStyle(.segmented)
-                .padding()
+                .padding()*/
 
                 List(bible.books(for: selectedTranslation)) { book in
                     NavigationLink(book.name) {
@@ -27,7 +29,7 @@ struct TranslationPickerView: View {
                     }
                 }
             }
-            .navigationTitle("Bible Books")
+            .navigationTitle("Books")
         }
     }
 }

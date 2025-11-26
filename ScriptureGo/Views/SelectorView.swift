@@ -19,25 +19,55 @@ struct SelectorView: View {
     var body: some View {
         NavigationView {
             VStack {
-                
+
                 if lastSelected.bookID != 0 {
                     Text("\(lastSelected.bookName) \(lastSelected.chapter)")
                         .font(.largeTitle)
                         .padding()
                 }
                 
-                Button {
-                    if let result = bible.randomChapter(for: selectedTranslation) {
-                        lastSelected = result
+                HStack(spacing: 12) {
+                    // Main Button
+                    Button {
+                        if let result = bible.randomChapter(for: selectedTranslation) {
+                            lastSelected = result
+                        }
+                    } label: {
+                        Label("Choose Chapter", systemImage: "book")
+                            .font(.title2.bold())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 60)
+                            .background(.blue.opacity(0.9))
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
                     }
-                } label: {
-                    Label("Choose Chapter", systemImage: "book.circle.fill")
+
+                    // Customization Button
+                    Button {
+
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .frame(width: 60, height: 60)
+
+                            Image(systemName: "filemenu.and.selection")
+                                .font(.title.bold())
+                                .foregroundColor(.blue)
+                        }
+                    }
                 }
-                .padding()
+                .padding(.horizontal)
+
+
+
+
+                
+                
                 
                 
             }
-            .navigationTitle("Selector")
+            .navigationTitle("ScriptureGo")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

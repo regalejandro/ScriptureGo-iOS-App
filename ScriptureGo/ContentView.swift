@@ -19,10 +19,8 @@ struct ContentView: View {
 
             TranslationPickerView()
                 .tabItem {
-                    Label("Picker", systemImage: "gearshape")
+                    Label("Books", systemImage: "books.vertical.fill")
                 }
-            
-            
         }
     }
 }

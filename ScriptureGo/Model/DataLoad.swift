@@ -59,5 +59,7 @@ class BibleManager: ObservableObject {
         return nil
     }
 
+
+    
 }
 

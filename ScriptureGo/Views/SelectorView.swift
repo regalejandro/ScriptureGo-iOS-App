@@ -8,12 +8,32 @@
 import SwiftUI
 
 struct SelectorView: View {
+
     
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
+    @AppStorage("selectedGroupsData") private var selectedGroupsData: Data = Data("[]".utf8)
+
+
+    
     @StateObject var bible = BibleManager()
     
     @State private var showSettings = false
     @State var lastSelected: ChapterPointer = .init(bookID: 0, bookName: "None Chosen", chapter: 0)
+    @State private var showingGroupSelector = false
+    
+    var selectedGroupsBinding: Binding<[String]> {
+        Binding(
+            get: {
+                (try? JSONDecoder().decode([String].self, from: selectedGroupsData)) ?? []
+            },
+            set: { newValue in
+                if let encoded = try? JSONEncoder().encode(newValue) {
+                    selectedGroupsData = encoded
+                }
+            }
+        )
+    }
+
     
     
     var body: some View {
@@ -73,15 +93,17 @@ struct SelectorView: View {
 
                     // Customization Button
                     Button {
-
+                        showingGroupSelector = true
                     } label: {
-
-                            Image(systemName: "filemenu.and.selection")
-                                .font(.title.bold())
-                                .foregroundColor(.blue)
-                                .frame(width: 62, height: 62)
+                        Image(systemName: "filemenu.and.selection")
+                            .font(.title.bold())
+                            .foregroundColor(.blue)
+                            .frame(width: 62, height: 62)
                     }
                     .glassEffect(in: Circle())
+                    .sheet(isPresented: $showingGroupSelector) {
+                        GroupSelectionView(selectedGroups: selectedGroupsBinding)
+                    }
 
                 }
                 .padding(.horizontal)

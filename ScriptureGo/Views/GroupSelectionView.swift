@@ -25,6 +25,7 @@ struct GroupSelectionView: View {
                     } label: {
                         HStack {
                             Text("Include All Books")
+                                .foregroundColor(Color.primary)
                             Spacer()
                             if groupMode == "all" {
                                 Image(systemName: "checkmark")
@@ -41,6 +42,7 @@ struct GroupSelectionView: View {
                     } label: {
                         HStack {
                             Text("Custom Selection")
+                                .foregroundColor(Color.primary)
                             Spacer()
                             if groupMode == "custom" {
                                 Image(systemName: "checkmark")
@@ -68,7 +70,7 @@ struct GroupSelectionView: View {
                     }
                 }
             }
-            .navigationTitle("Select Groups")
+            .navigationTitle("Category Filtering")
         }
     }
 }

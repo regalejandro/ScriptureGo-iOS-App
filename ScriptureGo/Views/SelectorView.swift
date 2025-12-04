@@ -54,7 +54,7 @@ struct SelectorView: View {
                         : "\(lastSelected.bookName)"
                     )
                         .font(.largeTitle)
-                        .padding(.top, 24)
+                        .padding(.top, 22)
                         .padding(.horizontal)
 
                     Spacer()
@@ -92,7 +92,7 @@ struct SelectorView: View {
                     Button {
                         showingGroupSelector = true
                     } label: {
-                        Image(systemName: "filemenu.and.selection")
+                        Image(systemName: "line.3.horizontal.decrease")
                             .font(.title.bold())
                             .foregroundColor(.blue)
                             .frame(width: 62, height: 62)
@@ -122,11 +122,9 @@ struct SelectorView: View {
                     } label: {
                         Image(systemName: "gear")
                             .font(.system(size: 18, weight: .semibold))
-                            .padding(12)
-                            .clipShape(Circle())
-
-                        
+                            .padding(6)
                     }
+
                 }
             }
             .sheet(isPresented: $showSettings) {

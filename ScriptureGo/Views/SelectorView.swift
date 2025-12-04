@@ -12,8 +12,6 @@ struct SelectorView: View {
     
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
     @AppStorage("selectedGroupsData") private var selectedGroupsData: Data = Data("[]".utf8)
-
-
     
     @StateObject var bible = BibleManager()
     
@@ -33,8 +31,6 @@ struct SelectorView: View {
             }
         )
     }
-
-    
     
     var body: some View {
         NavigationView {
@@ -102,8 +98,14 @@ struct SelectorView: View {
                     }
                     .glassEffect(in: Circle())
                     .sheet(isPresented: $showingGroupSelector) {
-                        GroupSelectionView(selectedGroups: selectedGroupsBinding)
+                        //let allGroups: [String]
+
+                        GroupSelectionView(
+                            selectedGroups: selectedGroupsBinding,
+                            allGroups: bible.groups(for: selectedTranslation)
+                        )
                     }
+
 
                 }
                 .padding(.horizontal)

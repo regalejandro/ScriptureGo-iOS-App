@@ -59,6 +59,24 @@ class BibleManager: ObservableObject {
         return nil
     }
 
+    func groups(for translation: String) -> [String] {
+        let books = data?.translations[translation]?.books ?? []
+
+        var seen = Set<String>()
+        var orderedGroups: [String] = []
+
+        for book in books {
+            for group in book.groups {
+                if !seen.contains(group) {
+                    seen.insert(group)
+                    orderedGroups.append(group)
+                }
+            }
+        }
+
+        return orderedGroups
+    }
+
 
     
 }

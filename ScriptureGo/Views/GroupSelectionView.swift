@@ -9,13 +9,8 @@ import SwiftUI
 
 struct GroupSelectionView: View {
     @Binding var selectedGroups: [String]
-
-    let allGroups = [
-        "Torah", "Historical Books", "Wisdom",
-        "Major Prophets", "Minor Prophets",
-        "Gospels", "Acts", "Epistles", "Revelation"
-    ]
-
+    let allGroups: [String]
+    
     var body: some View {
         NavigationStack {
             List {
@@ -36,6 +31,7 @@ struct GroupSelectionView: View {
         }
     }
 }
+
 
 
 /*

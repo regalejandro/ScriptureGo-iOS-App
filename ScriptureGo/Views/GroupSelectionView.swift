@@ -69,6 +69,8 @@ struct GroupSelectionView: View {
                         }
                     }
                 }
+                
+
             }
             .navigationTitle("Category Filtering")
         }

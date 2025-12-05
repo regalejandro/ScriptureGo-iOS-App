@@ -76,9 +76,15 @@ struct SelectorView: View {
                 HStack(spacing: 12) {
                     // Main Button
                     Button {
-                        if let result = bible.randomChapter(for: selectedTranslation) {
+                        if let result = bible.randomChapter(
+                            for: selectedTranslation,
+                            selectedGroups: selectedGroupsBinding.wrappedValue,
+                            groupMode: groupMode
+                        ) {
                             lastSelected = result
                         }
+
+
                     } label: {
                         Label("Choose Chapter", systemImage: "book")
                             .font(.title2.bold())

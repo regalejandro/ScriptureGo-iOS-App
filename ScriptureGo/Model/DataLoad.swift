@@ -34,30 +34,40 @@ class BibleManager: ObservableObject {
         data?.translations[translation]?.books ?? []
     }
     
-    func randomChapter(for translation: String) -> ChapterPointer? {
-        guard let books = data?.translations[translation]?.books else { return nil }
+    func randomChapter(
+        for translation: String,
+        selectedGroups: [String],
+        groupMode: String
+    ) -> ChapterPointer? {
         
-        // Total chapters across all books
+        // Get filtered books
+        let books = filteredBooks(for: translation, matchingGroups: selectedGroups, groupMode: groupMode)
+        guard books.isEmpty == false else { return nil }
+        
+        // Count total chapters
         let totalChapters = books.reduce(0) { $0 + $1.chapters }
         guard totalChapters > 0 else { return nil }
 
-        // Choose a chapter index across the entire canon
+        // Pick uniformly across all chapters
         let randomIndex = Int.random(in: 1...totalChapters)
-
-        // Find which book that chapter index belongs to
         var runningTotal = 0
 
         for book in books {
             let nextTotal = runningTotal + book.chapters
             if randomIndex <= nextTotal {
                 let chapterNumber = randomIndex - runningTotal
-                return ChapterPointer(bookID: book.id, bookName: book.name, chapter: chapterNumber)
+                return ChapterPointer(
+                    bookID: book.id,
+                    bookName: book.name,
+                    chapter: chapterNumber
+                )
             }
             runningTotal = nextTotal
         }
 
         return nil
     }
+
 
     func groups(for translation: String) -> [String] {
         let books = data?.translations[translation]?.books ?? []
@@ -77,6 +87,22 @@ class BibleManager: ObservableObject {
         return orderedGroups
     }
 
+    func filteredBooks(
+        for translation: String,
+        matchingGroups groups: [String],
+        groupMode: String
+    ) -> [Book] {
+        
+        let allBooks = books(for: translation)
+        
+        if groupMode == "all" {
+            return allBooks
+        }
+        
+        return allBooks.filter { book in
+            !Set(book.groups).isDisjoint(with: groups)
+        }
+    }
 
     
 }

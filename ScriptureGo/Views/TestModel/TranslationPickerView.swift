@@ -15,13 +15,6 @@ struct TranslationPickerView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                /*
-                Picker("Translation", selection: $selectedTranslation) {
-                    Text("Douay-Rheims").tag("Douay-Rheims")
-                    Text("NABRE").tag("NABRE")
-                }
-                .pickerStyle(.segmented)
-                .padding()*/
 
                 List(bible.books(for: selectedTranslation)) { book in
                     NavigationLink(book.name) {

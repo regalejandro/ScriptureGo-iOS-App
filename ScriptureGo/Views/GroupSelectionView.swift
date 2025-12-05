@@ -70,6 +70,30 @@ struct GroupSelectionView: View {
                     }
                 }
                 
+                if groupMode == "custom" {
+                    if selectedGroups.count < allGroups.count {
+                        Button {
+                            selectedGroups = allGroups
+                        } label: {
+                            HStack {
+                                Text("Select All")
+                                Spacer()
+                            }
+                        }
+                    }
+                    if selectedGroups.count > 0{
+                        Button {
+                            
+                            selectedGroups = []
+                        } label: {
+                            HStack {
+                                Text("Deselect All")
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+
 
             }
             .navigationTitle("Category Filtering")

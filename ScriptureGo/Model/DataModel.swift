@@ -12,6 +12,7 @@ struct BibleData: Codable {
 }
 
 struct Translation: Codable {
+    let tradition: String
     let books: [Book]
 }
 

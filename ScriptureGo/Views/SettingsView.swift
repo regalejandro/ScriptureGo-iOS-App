@@ -14,32 +14,45 @@ struct SettingsView: View {
     var availableTranslations: [String] {
         bible.data?.translations.keys.sorted() ?? []
     }
+    
+    var categorizedTranslations: [String: [String]] {
+        let all = bible.data?.translations.keys.sorted() ?? []
+
+        return Dictionary(
+            grouping: all,
+            by: { bible.tradition(of: $0) }
+        )
+    }
+
 
     var body: some View {
         NavigationView {
-            List {
-                Section(header: Text("Translation")) {
-
-                    ForEach(availableTranslations, id: \.self) { translationID in
-                        HStack {
-                            Text(translationID)
-
-                            Spacer()
-
-                            // Checkmark for selected translation
-                            if translationID == selectedTranslation {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.accentColor)
+            VStack {
+                List {
+                    ForEach(["Catholic", "Orthodox", "Protestant", "Other"], id: \.self) { category in
+                        if let translations = categorizedTranslations[category], !translations.isEmpty {
+                            Section(header: Text(category)) {
+                                ForEach(translations, id: \.self) { translationID in
+                                    HStack {
+                                        Text(translationID)
+                                        Spacer()
+                                        if translationID == selectedTranslation {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.accentColor)
+                                        }
+                                    }
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        selectedTranslation = translationID
+                                    }
+                                }
                             }
-                        }
-                        .contentShape(Rectangle()) // Makes the whole row tappable
-                        .onTapGesture {
-                            selectedTranslation = translationID
                         }
                     }
                 }
+                .navigationTitle("Settings")
             }
-            .navigationTitle("Settings")
+
         }
     }
 }

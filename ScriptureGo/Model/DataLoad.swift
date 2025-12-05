@@ -34,6 +34,10 @@ class BibleManager: ObservableObject {
         data?.translations[translation]?.books ?? []
     }
     
+    func tradition(of translationID: String) -> String {
+        data?.translations[translationID]?.tradition ?? "Other"
+    }
+    
     func randomChapter(
         for translation: String,
         selectedGroups: [String],

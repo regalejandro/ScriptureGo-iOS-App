@@ -54,7 +54,7 @@ struct GroupSelectionView: View {
 
                 // MARK: - CUSTOM GROUPS
                 if groupMode == "custom" {
-                    Section("Choose Groups") {
+                    Section("Choose Sections") {
                         ForEach(allGroups, id: \.self) { group in
                             Toggle(group, isOn: Binding(
                                 get: { selectedGroups.contains(group) },
@@ -96,7 +96,7 @@ struct GroupSelectionView: View {
 
 
             }
-            .navigationTitle("Category Filtering")
+            .navigationTitle("Section Filtering")
         }
     }
 }

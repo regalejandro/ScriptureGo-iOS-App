@@ -16,6 +16,7 @@ struct SelectorView: View {
     
     @StateObject var bible = BibleManager()
     
+    @State var translationAtLastSelected = ""
     @State private var showSettings = false
     @State var lastSelected: ChapterPointer = .init(bookID: 0, bookName: "None Chosen", chapter: 0)
     @State private var showingGroupSelector = false
@@ -37,12 +38,22 @@ struct SelectorView: View {
         NavigationView {
             VStack {
                 
+                
+                
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("Last Selected")
-                            .font(.body)
-                            .foregroundColor(.accentColor)
-                            .padding()
+                        HStack {
+                            Text("Last Selected")
+                                .font(.body)
+                                .foregroundColor(.accentColor)
+                                .padding()
+                            Spacer()
+                            
+                            Text("\(translationAtLastSelected)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal)
+                        }
 
                         Divider()
                             .padding(.horizontal)
@@ -76,6 +87,8 @@ struct SelectorView: View {
                 HStack(spacing: 12) {
                     // Main Button
                     Button {
+                        translationAtLastSelected = selectedTranslation
+                        
                         if let result = bible.randomChapter(
                             for: selectedTranslation,
                             selectedGroups: selectedGroupsBinding.wrappedValue,

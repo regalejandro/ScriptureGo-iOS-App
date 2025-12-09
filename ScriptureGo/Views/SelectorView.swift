@@ -16,7 +16,7 @@ struct SelectorView: View {
     
     @StateObject var bible = BibleManager()
     
-    @State var translationAtLastSelected = ""
+    @State var translationAtLastSelected = "   "
     @State private var showSettings = false
     @State var lastSelected: ChapterPointer = .init(bookID: 0, bookName: "None Chosen", chapter: 0)
     @State private var showingGroupSelector = false

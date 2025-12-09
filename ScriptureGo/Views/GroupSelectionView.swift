@@ -11,6 +11,8 @@ struct GroupSelectionView: View {
     @Binding var selectedGroups: [String]
     @Binding var groupMode: String  // "all" or "custom"
     
+    @State var selectedGroupsBackup: [String] = []
+    
     let allGroups: [String]
     
     var body: some View {
@@ -21,7 +23,8 @@ struct GroupSelectionView: View {
                 Section("Included Sections") {
                     Button {
                         groupMode = "all"
-                        selectedGroups = allGroups // include everything
+                        selectedGroupsBackup = selectedGroups
+                        selectedGroups = allGroups
                     } label: {
                         HStack {
                             Text("Include All Books")
@@ -36,9 +39,7 @@ struct GroupSelectionView: View {
 
                     Button {
                         groupMode = "custom"
-                        if selectedGroups.isEmpty {
-                            selectedGroups = [] // start empty
-                        }
+                        selectedGroups = selectedGroupsBackup
                     } label: {
                         HStack {
                             Text("Custom Selection")

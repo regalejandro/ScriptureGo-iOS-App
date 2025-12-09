@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("selectedTradition") var selectedTradition = "Catholic"
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
     @StateObject var bible = BibleManager()
 
@@ -24,31 +25,51 @@ struct SettingsView: View {
         )
     }
 
-
+    
+    
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(["Catholic", "Orthodox", "Protestant", "Other"], id: \.self) { category in
-                        if let translations = categorizedTranslations[category], !translations.isEmpty {
-                            Section(header: Text(category)) {
-                                ForEach(translations, id: \.self) { translationID in
-                                    HStack {
-                                        Text(translationID)
-                                        Spacer()
-                                        if translationID == selectedTranslation {
-                                            Image(systemName: "checkmark")
-                                                .foregroundColor(.accentColor)
-                                        }
+                    /* Tradition */
+                    Section(header: Text("Tradtion (Of Listed Translations)")) {
+                        ForEach(["Catholic", "Orthodox", "Protestant"], id: \.self) { tradition in
+                            HStack{
+                                Text(tradition)
+                                Spacer()
+                                if tradition == selectedTradition {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.accentColor)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedTradition = tradition
+                            }
+                        }
+                        
+                    }
+                    
+                    /* Translations */
+                    if let translations = categorizedTranslations[selectedTradition], !translations.isEmpty {
+                        Section(header: Text("\(selectedTradition) Translations")) {
+                            ForEach(translations, id: \.self) { translationID in
+                                HStack {
+                                    Text(translationID)
+                                    Spacer()
+                                    if translationID == selectedTranslation {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.accentColor)
                                     }
-                                    .contentShape(Rectangle())
-                                    .onTapGesture {
-                                        selectedTranslation = translationID
-                                    }
+                                }
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    selectedTranslation = translationID
                                 }
                             }
                         }
                     }
+                
                 }
                 .navigationTitle("Settings")
             }

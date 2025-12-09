@@ -18,7 +18,7 @@ struct GroupSelectionView: View {
             Form {
 
                 // MARK: - MODE SELECTION
-                Section {
+                Section("Included Sections") {
                     Button {
                         groupMode = "all"
                         selectedGroups = allGroups // include everything

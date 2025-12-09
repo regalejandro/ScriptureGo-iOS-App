@@ -11,7 +11,7 @@ struct GroupSelectionView: View {
     @Binding var selectedGroups: [String]
     @Binding var groupMode: String  // "all" or "custom"
     
-    @State var selectedGroupsBackup: [String] = []
+    @Binding var selectedGroupsBackup: [String]
     
     let allGroups: [String]
     

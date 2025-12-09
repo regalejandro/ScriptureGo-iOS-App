@@ -20,6 +20,7 @@ struct SelectorView: View {
     @State private var showSettings = false
     @State var lastSelected: ChapterPointer = .init(bookID: 0, bookName: "None Chosen", chapter: 0)
     @State private var showingGroupSelector = false
+    @State var selectedGroupsBackup: [String] = []
     
     var selectedGroupsBinding: Binding<[String]> {
         Binding(
@@ -121,7 +122,9 @@ struct SelectorView: View {
                         GroupSelectionView(
                             selectedGroups: selectedGroupsBinding,
                             groupMode: $groupMode,
+                            selectedGroupsBackup: $selectedGroupsBackup,
                             allGroups: bible.groups(for: selectedTranslation)
+                            
                         )
                     }
 

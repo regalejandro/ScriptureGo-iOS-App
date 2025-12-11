@@ -32,7 +32,7 @@ struct SettingsView: View {
             VStack {
                 List {
                     /* Tradition */
-                    Section(header: Text("Tradtion (Of Listed Translations)")) {
+                    Section(header: Text("Tradtion")) {
                         ForEach(["Catholic", "Orthodox", "Protestant"], id: \.self) { tradition in
                             HStack{
                                 Text(tradition)

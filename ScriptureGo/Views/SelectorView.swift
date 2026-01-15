@@ -100,7 +100,6 @@ struct SelectorView: View {
                                 lastSelected = result
                             }
                             
-                            
                         } label: {
                             Label("Choose Chapter", systemImage: "book")
                                 .font(.title2.bold())
@@ -109,6 +108,7 @@ struct SelectorView: View {
                             
                         }
                         .buttonStyle(.glassProminent)
+                        
                         
                         // Customization Button
                         Button {

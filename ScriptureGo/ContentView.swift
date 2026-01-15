@@ -14,15 +14,11 @@ struct ContentView: View {
             
         TabView {
             
-            ZStack {
-
-
-                SelectorView()
-                    .tabItem {
-                        Label("Select", systemImage: "rays")
-                    }
-            }
-            
+            SelectorView()
+                .tabItem {
+                    Label("Select", systemImage: "rays")
+                }
+        
             TranslationPickerView()
                 .tabItem {
                     Label("Books", systemImage: "books.vertical.fill")

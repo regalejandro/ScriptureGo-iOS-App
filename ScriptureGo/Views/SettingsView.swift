@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("selectedTradition") var selectedTradition = "Catholic"
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
+    @AppStorage("selectedTheme") var selectedTheme = "parchment"
     @StateObject var bible = BibleManager()
 
     @EnvironmentObject var themeManager: ThemeManager
@@ -75,6 +76,45 @@ struct SettingsView: View {
                         .foregroundColor(themeManager.current.textPrimary)
 
                     }
+                    
+                    
+                    Section(header: Text("App Theme")) {
+                        // Parchment
+                        HStack {
+                            Text("Parchment")
+                            Spacer()
+                            if selectedTheme == "parchment" {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(themeManager.current.accent)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedTheme = "parchment"
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                themeManager.setTheme(.parchment)
+                            }
+                        }
+                        
+                        // Meadow
+                        HStack {
+                            Text("Meadow")
+                            Spacer()
+                            if selectedTheme == "meadow" {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(themeManager.current.accent)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedTheme = "meadow"
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                themeManager.setTheme(.meadow)
+                            }
+                        }
+                    }
+                    .foregroundColor(themeManager.current.textPrimary)
+
                 
                 }
                 .navigationTitle("Settings")
@@ -87,4 +127,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(ThemeManager())
+
 }

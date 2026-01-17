@@ -10,10 +10,13 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("selectedTradition") var selectedTradition = "Catholic"
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
+    @AppStorage("themePreference") var themePreference: ThemePreference = .system
     @AppStorage("selectedTheme") var selectedTheme = "parchment"
     @StateObject var bible = BibleManager()
 
     @EnvironmentObject var themeManager: ThemeManager
+    
+
     
     var availableTranslations: [String] {
         bible.data?.translations.keys.sorted() ?? []
@@ -76,9 +79,11 @@ struct SettingsView: View {
                         .foregroundColor(themeManager.current.textPrimary)
 
                     }
+
                     
-                    
+                    /* Themes */
                     Section(header: Text("App Theme")) {
+                        
                         // Parchment
                         HStack {
                             Text("Parchment")
@@ -115,11 +120,45 @@ struct SettingsView: View {
                     }
                     .foregroundColor(themeManager.current.textPrimary)
 
-                
+                    /* Appearance Preference*/
+                    Section(header: Text("Appearance")) {
+                        ForEach(ThemePreference.allCases, id: \.self) { preference in
+                            HStack {
+                                Text(preference.title)
+                                Spacer()
+                                if preference == themePreference {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(themeManager.current.accent)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                themePreference = preference
+                                //themeManager.applyThemePreference(preference)
+                            }
+                        }
+                    }
+                    .foregroundColor(themeManager.current.textPrimary)
+                    
+                    
                 }
                 .navigationTitle("Settings")
             }
 
+        }
+    }
+}
+
+enum ThemePreference: String, CaseIterable {
+    case system
+    case light
+    case dark
+
+    var title: String {
+        switch self {
+        case .system: return "System"
+        case .light: return "Light"
+        case .dark: return "Dark"
         }
     }
 }

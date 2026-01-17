@@ -34,5 +34,28 @@ enum AppTheme {
         warning: Color(red: 165/255, green: 75/255, blue: 60/255)
     )
     
+    static let meadow = Theme(
+        // Buttons & main actions (soft sky blue)
+        primary: Color(red: 155/255, green: 195/255, blue: 225/255),
 
+        // Large background elements / cards (sage green)
+        secondary: Color(red: 195/255, green: 220/255, blue: 200/255),
+
+        // Main background (warm floral cream)
+        background: Color(red: 250/255, green: 246/255, blue: 240/255),
+
+        // Main readable text (soft charcoal, not pure black)
+        textPrimary: Color(red: 60/255, green: 65/255, blue: 70/255),
+
+        // Secondary text (gentler gray)
+        textSecondary: Color(red: 110/255, green: 115/255, blue: 120/255),
+
+        // Accent (wildflower pink)
+        accent: Color(red: 235/255, green: 170/255, blue: 195/255),
+
+        // Warning (muted rose red — not aggressive)
+        warning: Color(red: 200/255, green: 95/255, blue: 110/255)
+    )
+
+    
 }

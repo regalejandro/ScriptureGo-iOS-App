@@ -53,13 +53,13 @@ struct SelectorView: View {
                             HStack {
                                 Text("Last Selected")
                                     .font(.body)
-                                    .foregroundColor(.accentColor)
+                                    .foregroundColor(themeManager.current.textSecondary)
                                     .padding()
                                 Spacer()
                                 
                                 Text("\(translationAtLastSelected)")
                                     .font(.caption)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(themeManager.current.accent)
                                     .padding(.horizontal)
                             }
                             
@@ -75,6 +75,7 @@ struct SelectorView: View {
                         .font(.largeTitle)
                         .padding(.top, 22)
                         .padding(.horizontal)
+                        .foregroundColor(themeManager.current.textPrimary)
                         
                         Spacer()
                     }
@@ -82,11 +83,11 @@ struct SelectorView: View {
                     .frame(height: 180)
                     .background(
                         RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.blue.opacity(0.15))
+                            .fill(themeManager.current.secondary.opacity(0.15))
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 18)
-                            .stroke(Color.blue.opacity(0.3), lineWidth: 1)
+                            .stroke(themeManager.current.secondary.opacity(0.9), lineWidth: 1)
                     )
                     .padding()
                     
@@ -113,6 +114,7 @@ struct SelectorView: View {
                             
                         }
                         .buttonStyle(.glassProminent)
+                        .tint(themeManager.current.primary)
                         
                         
                         // Customization Button
@@ -121,7 +123,6 @@ struct SelectorView: View {
                         } label: {
                             Image(systemName: "line.3.horizontal.decrease")
                                 .font(.title.bold())
-                                .foregroundColor(.blue)
                                 .frame(width: 62, height: 62)
                         }
                         .glassEffect(in: Circle())
@@ -134,6 +135,7 @@ struct SelectorView: View {
                                 
                             )
                         }
+                        .tint(themeManager.current.primary)
                         
                         
                         

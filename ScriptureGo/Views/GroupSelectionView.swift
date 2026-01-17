@@ -13,6 +13,8 @@ struct GroupSelectionView: View {
     
     @Binding var selectedGroupsBackup: [String]
     
+    @EnvironmentObject var themeManager: ThemeManager
+    
     let allGroups: [String]
     
     var body: some View {
@@ -28,11 +30,10 @@ struct GroupSelectionView: View {
                     } label: {
                         HStack {
                             Text("Include All Books")
-                                .foregroundColor(Color.primary)
                             Spacer()
                             if groupMode == "all" {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(themeManager.current.accent)
                             }
                         }
                     }
@@ -43,15 +44,16 @@ struct GroupSelectionView: View {
                     } label: {
                         HStack {
                             Text("Custom Selection")
-                                .foregroundColor(Color.primary)
                             Spacer()
                             if groupMode == "custom" {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(themeManager.current.accent)
                             }
                         }
                     }
                 }
+                .foregroundColor(themeManager.current.textPrimary)
+
 
                 // MARK: - CUSTOM GROUPS
                 if groupMode == "custom" {
@@ -69,6 +71,8 @@ struct GroupSelectionView: View {
                             ))
                         }
                     }
+                    .foregroundColor(themeManager.current.textPrimary)
+
                 }
                 
                 if groupMode == "custom" {
@@ -78,6 +82,7 @@ struct GroupSelectionView: View {
                         } label: {
                             HStack {
                                 Text("Select All")
+                                    .foregroundColor(themeManager.current.accent)
                                 Spacer()
                             }
                         }
@@ -89,6 +94,7 @@ struct GroupSelectionView: View {
                         } label: {
                             HStack {
                                 Text("Deselect All")
+                                    .foregroundColor(themeManager.current.warning)
                                 Spacer()
                             }
                         }

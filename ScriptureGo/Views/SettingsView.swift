@@ -12,6 +12,8 @@ struct SettingsView: View {
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
     @StateObject var bible = BibleManager()
 
+    @EnvironmentObject var themeManager: ThemeManager
+    
     var availableTranslations: [String] {
         bible.data?.translations.keys.sorted() ?? []
     }
@@ -39,7 +41,7 @@ struct SettingsView: View {
                                 Spacer()
                                 if tradition == selectedTradition {
                                     Image(systemName: "checkmark")
-                                        .foregroundColor(.accentColor)
+                                        .foregroundColor(themeManager.current.accent)
                                 }
                             }
                             .contentShape(Rectangle())
@@ -49,6 +51,8 @@ struct SettingsView: View {
                         }
                         
                     }
+                    .foregroundColor(themeManager.current.textPrimary)
+
                     
                     /* Translations */
                     if let translations = categorizedTranslations[selectedTradition], !translations.isEmpty {
@@ -59,7 +63,7 @@ struct SettingsView: View {
                                     Spacer()
                                     if translationID == selectedTranslation {
                                         Image(systemName: "checkmark")
-                                            .foregroundColor(.accentColor)
+                                            .foregroundColor(themeManager.current.accent)
                                     }
                                 }
                                 .contentShape(Rectangle())
@@ -68,6 +72,8 @@ struct SettingsView: View {
                                 }
                             }
                         }
+                        .foregroundColor(themeManager.current.textPrimary)
+
                     }
                 
                 }

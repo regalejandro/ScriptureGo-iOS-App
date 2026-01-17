@@ -26,8 +26,7 @@ struct ContentView: View {
                     Label("Books", systemImage: "books.vertical.fill")
                 }
         }
-            
-            
+        .tint(themeManager.current.primary)
         
     }
 }

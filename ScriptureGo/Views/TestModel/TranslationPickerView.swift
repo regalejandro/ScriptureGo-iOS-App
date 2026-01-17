@@ -11,6 +11,7 @@ struct TranslationPickerView: View {
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
     @StateObject var bible = BibleManager()
     
+    @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
         NavigationStack {
@@ -20,6 +21,7 @@ struct TranslationPickerView: View {
                     NavigationLink(book.name) {
                         BookDetailView(book: book)
                     }
+                    .foregroundColor(themeManager.current.textPrimary)
                 }
             }
             .navigationTitle("Books")
@@ -30,4 +32,6 @@ struct TranslationPickerView: View {
 
 #Preview {
     TranslationPickerView()
+        .environmentObject(ThemeManager())
+
 }

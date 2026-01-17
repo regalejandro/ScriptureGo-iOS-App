@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var themeManager: ThemeManager
+    
     var body: some View {
             
         
-            
         TabView {
             
             SelectorView()
@@ -32,4 +34,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(ThemeManager())
 }

@@ -14,6 +14,8 @@ struct SelectorView: View {
     @AppStorage("selectedGroupsData") private var selectedGroupsData: Data = Data("[]".utf8)
     @AppStorage("groupMode") var groupMode: String = "all"
     
+    @EnvironmentObject var themeManager: ThemeManager
+    
     @StateObject var bible = BibleManager()
     
     @State var translationAtLastSelected = "   "
@@ -38,8 +40,11 @@ struct SelectorView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color(.sRGB, red: 250/255, green: 235/255, blue: 220/255)
+                themeManager.current.background
                     .ignoresSafeArea()
+
+                /*Color(.sRGB, red: 250/255, green: 235/255, blue: 220/255)
+                    .ignoresSafeArea()*/
                 
                 VStack {
                     
@@ -163,5 +168,6 @@ struct SelectorView: View {
 
 #Preview {
     SelectorView()
+        .environmentObject(ThemeManager())
 }
 

@@ -14,6 +14,7 @@ struct SettingsView: View {
     @AppStorage("selectedTheme") var selectedTheme = "parchment"
     @StateObject var bible = BibleManager()
 
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var themeManager: ThemeManager
     
 
@@ -83,6 +84,7 @@ struct SettingsView: View {
                     
                     /* Themes */
                     Section(header: Text("App Theme")) {
+
                         
                         // Parchment
                         HStack {
@@ -97,7 +99,7 @@ struct SettingsView: View {
                         .onTapGesture {
                             selectedTheme = "parchment"
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                themeManager.setTheme(.parchment)
+                                themeManager.setBaseTheme(.parchment, preference: themePreference, systemScheme: colorScheme)
                             }
                         }
                         
@@ -114,8 +116,7 @@ struct SettingsView: View {
                         .onTapGesture {
                             selectedTheme = "meadow"
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                themeManager.setTheme(.meadow)
-                            }
+                                themeManager.setBaseTheme(.meadow, preference: themePreference, systemScheme: colorScheme)                            }
                         }
                     }
                     .foregroundColor(themeManager.current.textPrimary)
@@ -134,7 +135,7 @@ struct SettingsView: View {
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 themePreference = preference
-                                //themeManager.applyThemePreference(preference)
+                                themeManager.applyThemePreference(preference, systemScheme: colorScheme)
                             }
                         }
                     }

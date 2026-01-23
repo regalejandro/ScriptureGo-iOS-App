@@ -10,14 +10,11 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("selectedTradition") var selectedTradition = "Catholic"
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims"
-    @AppStorage("themePreference") var themePreference: ThemePreference = .system
     @AppStorage("selectedTheme") var selectedTheme = "parchment"
     @StateObject var bible = BibleManager()
 
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var themeManager: ThemeManager
-    
-
     
     var availableTranslations: [String] {
         bible.data?.translations.keys.sorted() ?? []
@@ -80,67 +77,33 @@ struct SettingsView: View {
                         .foregroundColor(themeManager.current.textPrimary)
 
                     }
-
                     
                     /* Themes */
                     Section(header: Text("App Theme")) {
-
-                        
-                        // Parchment
-                        HStack {
-                            Text("Parchment")
-                            Spacer()
-                            if selectedTheme == "parchment" {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(themeManager.current.accent)
-                            }
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            selectedTheme = "parchment"
-                            withAnimation(.easeInOut(duration: 0.25)) {
-                                themeManager.setBaseTheme(.parchment, preference: themePreference, systemScheme: colorScheme)
-                            }
-                        }
-                        
-                        // Meadow
-                        HStack {
-                            Text("Meadow")
-                            Spacer()
-                            if selectedTheme == "meadow" {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(themeManager.current.accent)
-                            }
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            selectedTheme = "meadow"
-                            withAnimation(.easeInOut(duration: 0.25)) {
-                                themeManager.setBaseTheme(.meadow, preference: themePreference, systemScheme: colorScheme)                            }
-                        }
-                    }
-                    .foregroundColor(themeManager.current.textPrimary)
-
-                    /* Appearance Preference*/
-                    Section(header: Text("Appearance")) {
-                        ForEach(ThemePreference.allCases, id: \.self) { preference in
+                        ForEach(AppTheme.allCases, id: \.self) { theme in
                             HStack {
-                                Text(preference.title)
+                                Text(theme.rawValue.capitalized)
                                 Spacer()
-                                if preference == themePreference {
+                                if theme.rawValue == selectedTheme {
                                     Image(systemName: "checkmark")
                                         .foregroundColor(themeManager.current.accent)
                                 }
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                themePreference = preference
-                                themeManager.applyThemePreference(preference, systemScheme: colorScheme)
+                                withAnimation(.easeInOut(duration: 0.25)) {
+                                    themeManager.setBaseTheme(
+                                        theme,
+                                        systemScheme: colorScheme
+                                    )
+                                }
                             }
                         }
                     }
-                    .foregroundColor(themeManager.current.textPrimary)
+
                     
+                 
+    
                     
                 }
                 .navigationTitle("Settings")

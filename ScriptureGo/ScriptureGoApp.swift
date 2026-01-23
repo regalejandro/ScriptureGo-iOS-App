@@ -21,16 +21,10 @@ struct ScriptureGoApp: App {
             ContentView()
                 .environmentObject(themeManager)
                 .onAppear {
-                    themeManager.applyThemePreference(
-                        themePreference,
-                        systemScheme: colorScheme
-                    )
+                    themeManager.apply(systemScheme: colorScheme)
                 }
                 .onChange(of: colorScheme) {
-                    themeManager.applyThemePreference(
-                        themePreference,
-                        systemScheme: colorScheme
-                    )
+                    themeManager.apply(systemScheme: colorScheme)
                 }
 
 

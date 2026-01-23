@@ -15,39 +15,35 @@ final class ThemeManager: ObservableObject {
 
     @Published private(set) var current: Theme
 
-
     init() {
-        let raw = UserDefaults.standard.string(forKey: "selectedTheme") ?? AppTheme.parchment.rawValue
+        let raw =
+            UserDefaults.standard.string(forKey: "selectedTheme")
+            ?? AppTheme.parchment.rawValue
+
         let baseTheme = AppTheme(rawValue: raw) ?? .parchment
         self.current = baseTheme.light.theme
     }
 
-
-    func setBaseTheme(_ theme: AppTheme, preference: ThemePreference, systemScheme: ColorScheme) {
-        selectedThemeRaw = theme.rawValue
-        applyThemePreference(preference, systemScheme: systemScheme)
-    }
-
-    func applyThemePreference(_ preference: ThemePreference, systemScheme: ColorScheme) {
+    // Apply the correct variant based on system appearance
+    func apply(systemScheme: ColorScheme) {
         let baseTheme =
             AppTheme(rawValue: selectedThemeRaw) ?? .parchment
 
-        let variant: AppThemeVariant
-
-        switch preference {
-        case .system:
-            variant = systemScheme == .dark
+        let variant =
+            systemScheme == .dark
                 ? baseTheme.dark
                 : baseTheme.light
 
-        case .light:
-            variant = baseTheme.light
-
-        case .dark:
-            variant = baseTheme.dark
-        }
-
         current = variant.theme
+    }
+
+    // Called when the user picks a different theme
+    func setBaseTheme(
+        _ theme: AppTheme,
+        systemScheme: ColorScheme
+    ) {
+        selectedThemeRaw = theme.rawValue
+        apply(systemScheme: systemScheme)
     }
 }
 

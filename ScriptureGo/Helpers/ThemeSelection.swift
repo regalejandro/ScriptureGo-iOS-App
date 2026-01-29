@@ -77,7 +77,7 @@ enum AppTheme: String, CaseIterable {
         switch self {
         case .parchment: return .parchmentDark
         case .meadow: return .meadowDark
-        case .moonlight: return .moonlight
+        case .moonlight: return .moonlightDark
         }
     }
 }
@@ -88,6 +88,7 @@ enum AppThemeVariant {
     case meadow
     case meadowDark
     case moonlight
+    case moonlightDark
 
     var theme: Theme {
         switch self {
@@ -142,6 +143,17 @@ enum AppThemeVariant {
                 textSecondary: Color(red: 90/255, green: 100/255, blue: 120/255),
                 accent: Color(red: 215/255, green: 190/255, blue: 120/255),
                 warning: Color(red: 170/255, green: 85/255, blue: 95/255)
+            )
+            
+        case .moonlightDark:
+            return Theme(
+                primary: Color(red: 120/255, green: 140/255, blue: 190/255),
+                secondary: Color(red: 40/255, green: 55/255, blue: 85/255),
+                background: Color(red: 18/255, green: 22/255, blue: 32/255),
+                textPrimary: Color(red: 230/255, green: 235/255, blue: 245/255),
+                textSecondary: Color(red: 160/255, green: 170/255, blue: 190/255),
+                accent: Color(red: 220/255, green: 195/255, blue: 135/255),
+                warning: Color(red: 190/255, green: 95/255, blue: 105/255)
             )
 
         }

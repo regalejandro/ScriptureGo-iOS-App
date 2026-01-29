@@ -61,12 +61,14 @@ struct Theme {
 enum AppTheme: String, CaseIterable {
     case parchment
     case meadow
+    case moonlight
 
     // Light variant
     var light: AppThemeVariant {
         switch self {
         case .parchment: return .parchment
         case .meadow: return .meadow
+        case .moonlight: return .moonlight
         }
     }
 
@@ -75,6 +77,7 @@ enum AppTheme: String, CaseIterable {
         switch self {
         case .parchment: return .parchmentDark
         case .meadow: return .meadowDark
+        case .moonlight: return .moonlight
         }
     }
 }
@@ -84,6 +87,7 @@ enum AppThemeVariant {
     case parchmentDark
     case meadow
     case meadowDark
+    case moonlight
 
     var theme: Theme {
         switch self {
@@ -127,6 +131,19 @@ enum AppThemeVariant {
                 accent: Color(red: 205/255, green: 145/255, blue: 170/255),
                 warning: Color(red: 185/255, green: 85/255, blue: 100/255)
             )
+            
+        case .moonlight:
+            return Theme(
+
+                primary: Color(red: 90/255, green: 110/255, blue: 160/255),
+                secondary: Color(red: 160/255, green: 180/255, blue: 215/255),
+                background: Color(red: 242/255, green: 245/255, blue: 250/255),
+                textPrimary: Color(red: 35/255, green: 45/255, blue: 65/255),
+                textSecondary: Color(red: 90/255, green: 100/255, blue: 120/255),
+                accent: Color(red: 215/255, green: 190/255, blue: 120/255),
+                warning: Color(red: 170/255, green: 85/255, blue: 95/255)
+            )
+
         }
     }
 }

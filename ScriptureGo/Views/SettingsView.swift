@@ -100,6 +100,7 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    .foregroundColor(themeManager.current.textPrimary)
 
                     
                  

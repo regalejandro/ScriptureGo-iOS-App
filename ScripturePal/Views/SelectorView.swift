@@ -33,6 +33,7 @@ struct SelectorView: View {
     @AppStorage("selectedCustomGroupsData") private var selectedCustomGroupsData: Data = Data("[]".utf8)
     @AppStorage("groupMode") var groupMode: String = "all"
     @AppStorage("includeCurrentlyReadingFilter") var includeCurrentlyReadingFilter: Bool = false
+    @AppStorage("showRecentSelections") private var showRecentSelections = true
 
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var themeManager: ThemeManager
@@ -379,7 +380,9 @@ struct SelectorView: View {
                     .padding(.horizontal)
 
                     // ── Recent chapters list ──────────────────────────────────
-                    if !recentSelections.isEmpty {
+                    // Hidden (not cleared) when switched off in Settings, so
+                    // turning it back on restores the entries.
+                    if showRecentSelections, !recentSelections.isEmpty {
                         VStack(spacing: 0) {
                             ForEach(recentSelections.indices, id: \.self) { index in
                                 let selection = recentSelections[index]

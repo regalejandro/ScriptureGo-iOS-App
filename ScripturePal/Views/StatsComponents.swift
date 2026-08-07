@@ -641,7 +641,10 @@ struct StreakCard: View {
     }
 
     var body: some View {
-        HStack(spacing: 0) {
+        // Top-aligned so the two sides stay row-for-row level no matter how
+        // many lines each date caption wraps to. Centering here would push the
+        // shorter column down by half the height difference.
+        HStack(alignment: .top, spacing: 0) {
 
             // ── Current streak ───────────────────────────────────────────────
             VStack(spacing: 4) {
@@ -670,7 +673,9 @@ struct StreakCard: View {
             }
             .frame(maxWidth: .infinity)
 
-            Divider().frame(height: 70)
+            // Nudged down to sit against the numbers, since the HStack no
+            // longer centers it.
+            Divider().frame(height: 70).padding(.top, 10)
 
             // ── Best streak ──────────────────────────────────────────────────
             VStack(spacing: 4) {

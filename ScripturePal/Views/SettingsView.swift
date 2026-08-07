@@ -12,6 +12,10 @@ struct SettingsView: View {
     @AppStorage("selectedTradition") var selectedTradition = "Catholic"
     @AppStorage("selectedTranslation") var selectedTranslation = "Douay-Rheims/Knox"
     @AppStorage("selectedTheme") var selectedTheme = "parchment"
+    /// Whether finishing a book offers to start the next one. On by default.
+    @AppStorage("suggestNextBook") var suggestNextBook = true
+    /// Whether the Selector screen lists recently selected chapters. On by default.
+    @AppStorage("showRecentSelections") var showRecentSelections = true
     @StateObject var bible = BibleManager()
 
     @Environment(\.colorScheme) private var colorScheme
@@ -107,6 +111,19 @@ struct SettingsView: View {
                     }
                     .foregroundColor(themeManager.current.textPrimary)
 
+                    /* General */
+                    Section(
+                        header: Text("General"),
+                        footer: Text(generalFooter)
+                    ) {
+                        Toggle("Recent Selections", isOn: $showRecentSelections)
+                            .tint(themeManager.current.primary)
+
+                        Toggle("Suggest Next Book", isOn: $suggestNextBook)
+                            .tint(themeManager.current.primary)
+                    }
+                    .foregroundColor(themeManager.current.textPrimary)
+
                     /* Danger Zone */
                     Section (header: Text("Reading History")){
                         Button {
@@ -145,6 +162,13 @@ struct SettingsView: View {
             }
 
         }
+    }
+
+    /// Explains both General toggles, in the order they're listed, since a
+    /// Section footer covers the whole section.
+    private var generalFooter: String {
+        "Recent Selections lists your latest chosen chapters beneath the Choose Chapter button. "
+        + "Suggest Next Book offers to start the next book of the Bible after you finish one."
     }
 
     /// Disclaimer shown beneath the translation picker.

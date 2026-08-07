@@ -391,7 +391,9 @@ enum BookSearch {
 
 // MARK: - BookTile
 
-private struct BookTile: View {
+/// The library's book card. Also reused by NextBookPromptView so the
+/// next-book popup shows the same tile the user taps in the library.
+struct BookTile: View {
 
     let book: Book
     let size: LibraryTileSize
@@ -405,6 +407,10 @@ private struct BookTile: View {
             Image(systemName: isCurrentlyReading ? "book.closed.circle" : "book.closed.fill")
                 .font(.system(size: size.iconSize, weight: .medium))
                 .foregroundColor(theme.primary)
+                // Morphs between the two book symbols when the reading state
+                // changes inside a withAnimation — used by the next-book popup
+                // to show the book being taken up.
+                .contentTransition(.symbolEffect(.replace))
 
             Text(book.name)
                 .font(.system(size: size.nameFontSize, weight: .semibold, design: .rounded))

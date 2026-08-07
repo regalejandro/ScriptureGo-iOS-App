@@ -11,7 +11,12 @@ import SwiftData
 struct BookDetailView: View {
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var nextBookPrompt: NextBookPrompt
+    @AppStorage("selectedTranslation") private var selectedTranslation = "Douay-Rheims/Knox"
+    @AppStorage("suggestNextBook") private var suggestNextBook = true
+    @StateObject private var bible = BibleManager()
     @Query(sort: [SortDescriptor(\CustomGroup.sortOrder), SortDescriptor(\CustomGroup.createdAt)]) private var customGroups: [CustomGroup]
     @Query private var currentlyReading: [CurrentlyReading]
     @Query private var completions: [BookCompletion]
@@ -95,8 +100,16 @@ struct BookDetailView: View {
         }
         // Cover-to-cover completion of the current reading session.
         .alert("You've finished \(book.name)!", isPresented: $showingCompletionAlert) {
+            // No next-book suggestion here: the user just chose to stay with
+            // this book, so pointing them at the next one would be noise.
             Button("Read Again") { startNewSession() }
-            Button("Done Reading", role: .destructive) { removeFromCurrentlyReading() }
+            Button("Done Reading", role: .destructive) {
+                removeFromCurrentlyReading()
+                // Offer before popping: the prompt lives at the root, so it
+                // outlives this view and lands on whatever pushed it.
+                offerNextBook()
+                dismiss()
+            }
             Button("Stay in Session", role: .cancel) { }
         } message: {
             Text("You've read every chapter this session. What next?")
@@ -494,6 +507,33 @@ struct BookDetailView: View {
         }
     }
 
+    // MARK: - Next book
+
+    /// The book after this one in the current translation's canonical order.
+    ///
+    /// Deliberately does not wrap: finishing the canon's last book (Revelation
+    /// in most translations) returns nil, so the user is congratulated and left
+    /// alone rather than pointed back at Genesis. Also nil if the book isn't in
+    /// the current translation at all.
+    private var nextBook: Book? {
+        let books = bible.books(for: selectedTranslation)
+        guard let index = books.firstIndex(where: { $0.canonicalKey == book.canonicalKey }),
+              books.indices.contains(index + 1)
+        else { return nil }
+        return books[index + 1]
+    }
+
+    /// Offers the next book after "Done Reading" — unless the suggestion is
+    /// switched off in Settings, there is no next book, or it's already in
+    /// Currently Reading. Not used by "Read Again".
+    private func offerNextBook() {
+        guard suggestNextBook,
+              let next = nextBook,
+              !currentlyReading.contains(where: { $0.canonicalKey == next.canonicalKey })
+        else { return }
+        nextBookPrompt.offer(next, after: book.name)
+    }
+
     /// Begin a fresh session for an already-current book (Read Again). Resets
     /// the session start so earlier reads no longer count toward it.
     private func startNewSession() {
@@ -748,5 +788,6 @@ private struct BookReadingLog: View {
     NavigationStack {
         BookDetailView(book: Book(id: 1, name: "Genesis", chapters: 50, groups: ["Pentateuch"], section: "Old Testament", canonicalKey: "genesis"))
             .environmentObject(ThemeManager())
+            .environmentObject(NextBookPrompt())
     }
 }
